@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# output the remaining battery percentage
+alias battery="pmset -g batt | egrep '([0-9]+\%).*' -o --color=auto | cut -f1 -d ';'"
+
+# Together, these aliases allow color when piping ls output through less
+alias ls='CLICOLOR_FORCE=1 ls -G'
+alias less='less -R'
+
+# drop into desktoppicture.db
+alias desktop="sqlite3 $HOME/Library/Application\ Support/Dock/desktoppicture.db"
+
+# send a silly message to the notification system
+# (note: terminal-notifier must be installed)
+alias ding="terminal-notifier -message 'DING!'"
+
+# generate tags for a code base (run inside directory)
+# (note: ctags must be installed)
+alias ctags="`brew --prefix`/bin/ctags"

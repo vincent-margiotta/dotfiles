@@ -1,0 +1,132 @@
+" .vimrc
+"
+" vundle
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-endwise'
+Plugin 'christoomey/vim-sort-motion'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'saltstack/salt-vim'
+Plugin 'elixir-editors/vim-elixir'
+Plugin 'martinda/Jenkinsfile-vim-syntax'
+call vundle#end()
+filetype plugin indent on
+
+set encoding=utf-8
+
+"set backspace=indent,eol,start  " Backspace like normal
+set autoindent                  " auto indentation
+" set colorcolumn=79              " Set vertical ruler
+set encoding=utf-8
+set expandtab                   " Convert to spaces
+set fileformat=unix
+" set hls                         " High light search
+set ignorecase
+set incsearch                   " Incremental search (as string is typed)
+set laststatus=2
+set lbr                         " Line break
+set mouse=                      " disable mouse
+set noshowmode                  " Hide
+set number                      " show line numbers
+set relativenumber              " and relative line numbers
+set ruler                       " Show current position in file
+set scrolloff=5                 " Show lines above and below cursor
+set shell=/usr/local/bin/zsh
+set shiftwidth=2
+set showmatch                   " matching braces
+set smartcase
+set softtabstop=2
+set tabstop=2                   " 2 spaces for tab
+set textwidth=79
+set wildmenu
+set wildmode=longest,list
+
+" netrw
+let g:netrw_banner=0
+let g:netrw_liststyle=3
+let g:netrw_browse_split=4
+let g:netrw_altv=1
+let g:netrw_winsize=25
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+
+" code folding
+set foldmethod=syntax
+set foldnestmax=10
+set foldlevel=2
+set foldignore=
+set nofoldenable
+
+set t_Co=256
+set background=dark
+colorscheme gruvbox
+hi! Normal guibg=NONE
+hi! NonText guibg=NONE
+hi! Normal ctermbg=NONE
+hi! NonText ctermbg=NONE
+syntax on                       " syntax highlighting
+
+
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+noremap k <Nop>
+noremap j <Nop>
+noremap l <Nop>
+noremap h <Nop>
+
+" inoremap jk <Esc>
+" inoremap JK <Esc>
+noremap <C-l> :nohlsearch<CR>   " clear terminal and highlighted search items
+
+" set up some custom colors
+highlight clear SignColumn
+highlight VertSplit    ctermbg=236
+highlight ColorColumn  ctermbg=237
+highlight LineNr       ctermbg=236 ctermfg=240
+highlight CursorLineNr ctermbg=236 ctermfg=240
+highlight CursorLine   ctermbg=236
+highlight StatusLineNC ctermbg=238 ctermfg=0
+highlight StatusLine   ctermbg=240 ctermfg=12
+highlight IncSearch    ctermbg=3   ctermfg=1
+highlight Search       ctermbg=1   ctermfg=3
+highlight Visual       ctermbg=3   ctermfg=0
+highlight Pmenu        ctermbg=240 ctermfg=12
+highlight PmenuSel     ctermbg=3   ctermfg=1
+highlight SpellBad     ctermbg=0   ctermfg=1
+
+" highlight the status bar when in insert mode
+if version >= 700
+  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
+  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
+endif
+
+" trailing whitespace highlighting
+" http://vim.wikia.com/wiki/highlight_unwanted_spaces
+highlight extrawhitespace ctermbg=white guibg=white
+match extrawhitespace /\s\+$/
+autocmd bufwinenter * match extrawhitespace /\s\+$/
+autocmd insertenter * match extrawhitespace /\s\+\%#\@<!$/
+autocmd insertleave * match extrawhitespace /\s\+$/
+autocmd bufwinleave * call clearmatches()
+
+" toggle spellcheck with `
+map ` :setlocal spell! spelllang=en_us<cr>j
+
+au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>79v.\+', -1)
+
+augroup vagrant
+  au!
+  au BufRead,BufNewFile Vagrantfile set filetype=ruby
+augroup END
