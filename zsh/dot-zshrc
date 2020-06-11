@@ -20,12 +20,6 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases
 source $HOME/.functions
 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-if which nodenv > /dev/null; then eval "$(nodenv init -)"; fi
-
 __load_key
 
 export ASDF_DATA_DIR=`brew --prefix asdf`/

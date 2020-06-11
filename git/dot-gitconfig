@@ -1,6 +1,6 @@
 [user]
     name = Vincent J. Margiotta
-    email = vim112358@gmail.com
+    email = vmargiotta@iseatz.com
 [core]
     editor = vim
     pager = "less -F -X"

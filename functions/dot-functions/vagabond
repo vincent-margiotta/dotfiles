@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# run vagrant commands from anywhere
+## Run vagrant commands from anywhere
 vagabond () {
   [ "$#" -lt 2 ] && echo "usage: vagabond PROJECT CMD" && return
 
