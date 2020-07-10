@@ -3,10 +3,10 @@
 
 
 ##
-# Build a docker container found in the current working directory.
+# Build a docker container from the Dockerfile in current working directory.
 #
-# The container is tagged with the current working directory name and
-# an optional secondary tag for version or branch information.
+# Defaults to tagging the container with the current working directory.
+# Optionally, a tag may be supplied as the first positional argument.
 __docker_build_container() {
   command docker build --tag "${1:-$(basename $(pwd)):latest}" "$PWD"
 }
@@ -14,8 +14,8 @@ __docker_build_container() {
 ##
 # Prune all docker-related objects older than a given duration.
 #
-# Defaults to 14 days (336 hours). All expirations must
-# be parseable by Go. See https://golang.org/pkg/time/#ParseDuration
+# Defaults to 14 days (336 hours). All durations must be
+# parseable by Go. See https://golang.org/pkg/time/#ParseDuration
 __docker_prune_expired_objects() {
   command docker system prune --all --filter "until=${1:-336h}"
 }

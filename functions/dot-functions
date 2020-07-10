@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+pushd "$HOME/.lib"
+  for FILE in $(ls); do
+    echo "source $FILE"
+    source "$FILE"
+  done
+popd

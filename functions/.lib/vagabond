@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-## Run vagrant commands from anywhere
+
+
+##
+# Vagabond is polite vagrant.
+#
+# This function allows arbitrary vagrant commands to be run
+# from anywhere rather than the vagrant image repository.
 vagabond () {
-  [ "$#" -lt 2 ] && echo "usage: vagabond PROJECT CMD" && return
+  [ "$#" -lt 2 ] && echo "usage: vagabond PROJECT CMD" && exit 1
 
   MAX_RECURSION_DEPTH=4
 

@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
 
 function __stow() {
-    $(which stow) --verbose=1 --target="$HOME" --dotfiles --restow "$1"
+  STOW=$(which stow)
+  [ "$?" == 0 ] || { echo 'Please install GNU Stow'; exit 2; }
+
+  VERBOSITY=1; TARGET="$HOME"
+  "$STOW" --dotfiles --restow --verbose="$VERBOSITY" --target="$TARGET" "$@"
 }
 
-# __stow alacritty
-# __stow aliases
-# __stow chunkwm
+__stow aliases
+__stow chunkwm
 __stow functions
-# __stow git
-# __stow oh-my-zsh
-# __stow skhd
-# __stow tmux
-# __stow vim
-# __stow zsh
+__stow git
+__stow oh-my-zsh
+__stow skhd
+__stow tmux
+__stow vim
+__stow zsh
