@@ -13,9 +13,6 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-endwise'
 Plugin 'christoomey/vim-sort-motion'
 Plugin 'flazz/vim-colorschemes'
-Plugin 'saltstack/salt-vim'
-Plugin 'elixir-editors/vim-elixir'
-Plugin 'martinda/Jenkinsfile-vim-syntax'
 call vundle#end()
 filetype plugin indent on
 
