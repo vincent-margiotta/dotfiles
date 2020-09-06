@@ -9,11 +9,9 @@ function __stow() {
 }
 
 __stow aliases
-__stow chunkwm
 __stow functions
 __stow git
 __stow oh-my-zsh
-__stow skhd
 __stow tmux
 __stow vim
 __stow zsh
