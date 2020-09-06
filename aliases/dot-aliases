@@ -10,10 +10,6 @@ alias less='less -R'
 # drop into desktoppicture.db
 alias desktop="sqlite3 $HOME/Library/Application\ Support/Dock/desktoppicture.db"
 
-# send a silly message to the notification system
-# (note: terminal-notifier must be installed)
-alias ding="terminal-notifier -message 'DING!'"
-
-# generate tags for a code base (run inside directory)
+# fix to generate tags for a code base (run inside directory)
 # (note: ctags must be installed)
 alias ctags="`brew --prefix`/bin/ctags"
