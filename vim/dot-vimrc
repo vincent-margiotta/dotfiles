@@ -38,7 +38,7 @@ set number                      " show line numbers
 set relativenumber              " and relative line numbers
 set ruler                       " Show current position in file
 set scrolloff=5                 " Show lines above and below cursor
-set shell=/usr/local/bin/zsh
+set shell=/bin/zsh
 set shiftwidth=2
 set showmatch                   " matching braces
 set smartcase
