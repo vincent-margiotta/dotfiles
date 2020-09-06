@@ -79,9 +79,9 @@ __docker_monitor_active_containers() {
             "{{.Status}}" )
 
   # Bash magic: roughly equivalent to `$HEADERS.join('\t')`.
-  FORMATSTR="table $(local IFS=$'\t'; echo "$HEADERS")"
+  FORMAT_STR="table $(local IFS=$'\t'; echo "$HEADERS")"
 
-  while true; clear; do command docker ps --format "$FORMATSTR"; sleep 5; done
+  while true; clear; do command docker ps --format "$FORMAT_STR"; sleep 5; done
 }
 
 ##
@@ -97,7 +97,7 @@ __docker_launch_registry_container() {
 ##
 # Launch a local Jenkins container.
 #
-# By default Jenkins expects to have access to code in $HOME/Docuements/iseatz.
+# By default Jenkins expects to have access to code in $HOME/Docuements.
 # If this is not the case, you can pass in a directory which contains the code
 # to be built as a positional argument to this function.
 __docker_launch_jenkins_container() {
@@ -106,11 +106,9 @@ __docker_launch_jenkins_container() {
                      --user root \
                      --publish 8080:8080 \
                      --publish 50000:50000 \
-                     --volume "${1:-$HOME/Documents/iseatz}":/var/jenkins_home/code \
+                     --volume "${1:-$HOME/Documents}":/var/jenkins_home/code \
                      --volume jenkins-data:/var/jenkins_home \
                      --volume /var/run/docker.sock:/var/run/docker.sock \
                      jenkinsci/blueocean
 }
-
-
 
