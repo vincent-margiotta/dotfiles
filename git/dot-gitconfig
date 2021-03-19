@@ -1,6 +1,6 @@
 [user]
     name = Vincent J. Margiotta
-    email = vim112358@gmail.com
+    email = vincent.joseph.margiotta.jr@gmail.com
 [core]
     editor = vim
     pager = "less -F -X"
@@ -11,12 +11,12 @@
     interactive = auto
     ui = auto
 [gc]
-    auto=1
+    auto = 1
 [merge]
-    summary=true
-    tool=vimdiff
-    conflictstyle=diff3
-    prompt=false
+    summary = true
+    tool = vimdiff
+    conflictstyle = diff3
+    prompt = false
 [grep]
     extendRegexp = true
     lineNumber = true
