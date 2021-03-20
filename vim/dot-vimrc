@@ -1,11 +1,5 @@
-" .vimrc
-
-
-
-" Vundle
+" Keep Vundle configuration separate
 source ~/.vimrc-vundle
-
-set encoding=utf-8
 
 "set backspace=indent,eol,start  " Backspace like normal
 set autoindent                  " auto indentation
@@ -13,7 +7,7 @@ set autoindent                  " auto indentation
 set encoding=utf-8
 set expandtab                   " Convert to spaces
 set fileformat=unix
-" set hls                         " High light search
+set hls                         " High light search
 set ignorecase
 set incsearch                   " Incremental search (as string is typed)
 set laststatus=2
@@ -21,10 +15,9 @@ set lbr                         " Line break
 set mouse=                      " disable mouse
 set noshowmode                  " Hide
 set number                      " show line numbers
-set relativenumber              " and relative line numbers
 set ruler                       " Show current position in file
 set scrolloff=5                 " Show lines above and below cursor
-set shell=/bin/zsh
+set shell=$SHELL
 set shiftwidth=2
 set showmatch                   " matching braces
 set smartcase
@@ -34,7 +27,7 @@ set textwidth=79
 set wildmenu
 set wildmode=longest,list
 
-" netrw
+" netrw Configuration
 let g:netrw_banner=0
 let g:netrw_liststyle=3
 let g:netrw_browse_split=4
@@ -45,7 +38,7 @@ let g:netrw_winsize=25
 "   autocmd VimEnter * :Vexplore
 " augroup END
 
-" code folding
+" Configuration for code-folding
 set foldmethod=syntax
 set foldnestmax=10
 set foldlevel=2
@@ -54,7 +47,7 @@ set nofoldenable
 
 set t_Co=256
 set background=dark
-colorscheme gruvbox
+" colorscheme material
 hi! Normal guibg=NONE
 hi! NonText guibg=NONE
 hi! Normal ctermbg=NONE
@@ -111,8 +104,3 @@ autocmd bufwinleave * call clearmatches()
 map ` :setlocal spell! spelllang=en_us<cr>j
 
 au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>79v.\+', -1)
-
-augroup vagrant
-  au!
-  au BufRead,BufNewFile Vagrantfile set filetype=ruby
-augroup END

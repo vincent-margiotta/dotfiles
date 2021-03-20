@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+##
+# Capture and display output simulataneously.
+__capture() { tee captured.log; }
