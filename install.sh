@@ -1,17 +1,11 @@
 #!/usr/bin/env bash
 
-function __stow() {
-  STOW=$(which stow)
-  [ "$?" == 0 ] || { echo 'Please install GNU Stow'; exit 2; }
+##
+# Install dotfiles into home directory
+TARGET="$HOME"
+LINKER="$(which ln)"
 
-  VERBOSITY=1; TARGET="$HOME"
-  "$STOW" --dotfiles --restow --verbose="$VERBOSITY" --target="$TARGET" "$@"
-}
-
-__stow aliases
-__stow functions
-__stow git
-__stow oh-my-zsh
-__stow tmux
-__stow vim
-__stow zsh
+[ "$#" -gt 0 ] || { echo "Supply a dotfile."; exit 2; }
+DOTFILE="$(echo "$1" | sed s/dot-/./ -)"
+echo Linking "$1" as "$TARGET/$DOTFILE"...
+"$LINKER" -rs "$1" "$TARGET/$DOTFILE"
