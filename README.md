@@ -13,9 +13,9 @@ The linking mechanism is intentionally narrowly scoped. The following are true:
 * Will create parent directories as necessary
 * Will link only one dotfile per invocation
 * Will link only regular files
-* Will link relative to the value of `$DOTFILE_TARGET` or `$HOME` environment variabes
+* Will link relative to the value the `$DOTFILE_TARGET` or `$HOME` environment variabes
 * Will overwrite existing links
-* Will remove the top-most directory of the filepath
+* Will remove the top-most directory the filepath
 
 Suppose your repository looks like the following:
 
@@ -36,18 +36,19 @@ Then `link.sh` can be used as in the following:
 
 ```
 $ ./link.sh foo/dot-config/foo
-Linked foo/dot-config/foo to /Users/vince/.config/foo
+Linking foo/dot-config/foo as /Users/vince/.config/foo...
 ```
 
 Notice that the parent directory `foo` was removed before the file was
 linked. This has the advantage of allowing you to organize your dotfiles at the
-top-level.
+top-level without accidentally imparting hierarchical knowledge of the file
+structure.
 
 Similarly,
 
 ```
 $ ./link.sh bar/dot-bazrc
-Linked bar/dot-bazrc to /Users/vince/.bazrc
+Linking bar/dot-bazrc as /Users/vince/.bazrc...
 ```
 
 The top-level directory `bar` has no meaning to `link.sh`. It's there for the
@@ -63,9 +64,9 @@ but quite a bit sophisticated.
 
 Next I tried [GNU Stow](https://www.gnu.org/software/stow/), which is almost
 perfect except that I disliked that the source dotfiles (ie, the configuration
-files contained within this repository) had to named in their hidden form. Some
-versions of GNU Stow support the `--dotfile` flag, which transform the source
-files named like `dot-` to its "hidden" form. Unfortunately, it appeared that
+files contained within this repository) had to be named in their hidden form. Some
+versions of GNU Stow support the `--dotfile` flag, which transforms the source
+files named like `dot-` to their "hidden" form. Unfortunately, it appeared that
 this transformation only applied to the basename, which means if there are any
 other parts of the filepath that should be hidden, then they need to be named
 as such in the source repository (ie, this repository). For example
