@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-##
-# Add a public key to ssh-keychain.
-# Note: loading an previously loaded key does nothing.
-__load_key() { ssh-add "$HOME/.ssh/id_rsa" }
-

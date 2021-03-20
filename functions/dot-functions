@@ -1,8 +1,70 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-pushd "$HOME/.lib"
-  for FILE in $(ls); do
-    echo "source $FILE"
-    source "$FILE"
-  done
-popd
+
+##
+# Capture and display output simultaneously.
+#
+# This is simply a convenience.
+function capture() { tee captured.log; }
+
+
+##
+# Toggle macos' Spotlight indexing.
+#
+# Every now and again, macos loses its mind trying to index the filesystem.
+# When it does this, it hogs a TON of resources. Since I never use finder, this
+# command disables this feature.
+function toggle_spotlight() {
+  mdutil -as | grep --quiet "enabled"; local SPOTLIGHT_ENABLED="$?"
+  [ "$SPOTLIGHT_ENABLED" -eq 0 ] && sudo mdutil -a -i off || sudo mdutil -a -i on
+}
+
+##
+# Launch a local docker registry container.
+#
+# This can be convenient for pushing/pulling tagged docker images without a
+# dockerhub account.
+function docker_launch_registry_container() {
+  command -v docker; [ "$?" -eq 0 ] || { echo "Install: docker."; return 1; }
+  command docker run --detach \
+                     --name registry \
+                     --restart always \
+                     --publish 5000:5000 \
+                     registry:2
+}
+
+##
+# Launch a local docker Jenkins container.
+#
+# By default Jenkins expects to have access to code in $HOME/Documents.
+# If this is not the case, you can pass in a directory which contains the code
+# to be built as a positional argument to this function.
+function docker_launch_jenkins_container() {
+  command -v docker; [ "$?" -eq 0 ] || { echo "Install: docker."; return 1; }
+  local CODEDIR="${1:-$HOME/Documents}"
+  command docker run --rm \
+                     --detach \
+                     --user root \
+                     --publish 8080:8080 \
+                     --publish 50000:50000 \
+                     --volume "$CODEDIR":/var/jenkins_home/code \
+                     --volume jenkins-data:/var/jenkins_home \
+                     --volume /var/run/docker.sock:/var/run/docker.sock \
+                     jenkinsci/blueocean
+}
+
+##
+# Output a list of the top N processes hogging my CPU!
+#
+# Pass an integer N to this function to output only the top N.
+function utilization() {
+  command ps -cu "$USER" -r -o command,%cpu,%mem | command head -n "${1:-10}"
+}
+
+##
+# Watch directory and perform some compound command which takes an event as an
+# argument upon any changes detected.
+function watch_and_do() {
+  local DIR="$1"; local CMD="$2"
+  fswatch -0 "$DIR" | while read -d "" EVENT; do "$CMD" ${EVENT}; done
+}
