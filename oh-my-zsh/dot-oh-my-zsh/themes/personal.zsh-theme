@@ -1,4 +1,5 @@
-# Comment
+##
+# This is my personal Z-shell theme.
 
 PROMPT='%{$fg[cyan]%}[%c][%0(?.%{$fg[green]%}ok.%{$fg[red]%}fail)%{$fg[cyan]%}] %{$reset_color%}'
 RPROMPT='%{$fg[blue]%}$(git_prompt_info)%{$reset_color%} $(git_prompt_status)%{$reset_color%}'
