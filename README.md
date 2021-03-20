@@ -13,9 +13,9 @@ The linking mechanism is intentionally narrowly scoped. The following are true:
 * Will create parent directories as necessary
 * Will link only one dotfile per invocation
 * Will link only regular files
-* Will link relative to the value the `$DOTFILE_TARGET` or `$HOME` environment variabes
+* Will link relative to the value of `$DOTFILE_TARGET` or `$HOME` environment variabes
 * Will overwrite existing links
-* Will remove the top-most directory the filepath
+* Will remove the top-most directory of the filepath
 
 Suppose your repository looks like the following:
 
@@ -36,7 +36,7 @@ Then `link.sh` can be used as in the following:
 
 ```
 $ ./link.sh foo/dot-config/foo
-Linking foo/dot-config/foo as /Users/vince/.config/foo...
+Linked foo/dot-config/foo to /Users/vince/.config/foo
 ```
 
 Notice that the parent directory `foo` was removed before the file was
@@ -48,7 +48,7 @@ Similarly,
 
 ```
 $ ./link.sh bar/dot-bazrc
-Linking bar/dot-bazrc as /Users/vince/.bazrc...
+Linked bar/dot-bazrc to /Users/vince/.bazrc
 ```
 
 The top-level directory `bar` has no meaning to `link.sh`. It's there for the
