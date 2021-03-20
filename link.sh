@@ -25,8 +25,6 @@ LINKER="$(command -v ln)"
 [ -d "$1" ] && { echo "Cannot link directories. "; exit 2; }
 
 # Convert the `dot-` prefix to its hidden form & remove the top-most directory.
-# Also the linked dotfile must refer to an absolute path or else the link will
-# not function.
 DOTFILE="$(echo "$1" | sed 's/dot-/./g' | cut -d '/' -f2-)"
 
 # Create the parent directory, if it does not exist.
@@ -34,13 +32,6 @@ PARENT="$(dirname $TARGET/$DOTFILE)"
 [ -d "$PARENT" ] || { echo "Creating parent directory. "; mkdir -p "$PARENT"; }
 
 # Create symbolic links, overwriting any existing files.
-#
-# There are annoying differences between GNU and BSD ln, so we need to switch
-# on which is installed.
 echo Linking "$1" as "$TARGET/$DOTFILE"...
-if [ "$(uname -s)" == "Darwin" ]; then
-  "$LINKER" -fs "$PWD/$1" "$TARGET/$DOTFILE"
-else
-  "$LINKER" -rs "$PWD/$1" "$TARGET/$DOTFILE"
-fi
+"$LINKER" -fs "$PWD/$1" "$TARGET/$DOTFILE"
 
