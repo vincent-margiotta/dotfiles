@@ -1,4 +1,4 @@
-#local !/usr/bin/env bash
+#!/usr/bin/env bash
 
 ##
 # Non-sophisticated dotfile management.
