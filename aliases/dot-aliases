@@ -1,15 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
-# output the remaining battery percentage
-alias battery="pmset -g batt | egrep '([0-9]+\%).*' -o --color=auto | cut -f1 -d ';'"
-
-# Together, these aliases allow color when piping ls output through less
-alias ls='CLICOLOR_FORCE=1 ls -G'
-alias less='less -R'
-
-# drop into desktoppicture.db
-alias desktop="sqlite3 $HOME/Library/Application\ Support/Dock/desktoppicture.db"
-
-# fix to generate tags for a code base (run inside directory)
-# (note: ctags must be installed)
-alias ctags="`brew --prefix`/bin/ctags"
+# Output battery percentage (macos specific-- likely to break at any moment)
+alias battery="pmset -g batt | grep -e '([0-9]+\%).*' -o | cut -d ';' -f1"
