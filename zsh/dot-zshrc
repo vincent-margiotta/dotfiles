@@ -1,14 +1,14 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 export ZSH=$HOME/.oh-my-zsh
 export LANG=en_US.UTF-8
 export ARCHFLAGS="-arch x86_64"
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-export EDITOR='vim'
+export EDITOR=vim
 
 ZSH_THEME=personal
-COMPLETION_WAITING_DOTS="true"
 
+# Honestly, I hate most of these. Remove!
 plugins=(
   asdf
   aws
@@ -16,23 +16,22 @@ plugins=(
   bgnotify
   brew
   catimg
-  colored-man-pages
   docker
   dotenv
-  jira
   vi-mode
   vundle
-  web-search
-  zsh-interactive-cd
 )
 
+##
 # Push a directory onto the stack whenever `cd` is used,
 # being silent about it and ensuring that the contents of the stack is a set.
 setopt AUTO_PUSHD
 setopt PUSHD_SILENT
 setopt PUSHD_IGNORE_DUPS
 
+##
 # Enable bash completion
+# TODO: Is this still necessary?
 autoload bashcompinit && bashcompinit
 
 source $HOME/.aliases
