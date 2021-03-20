@@ -9,13 +9,13 @@ found useful.
 
 The linking mechanism is intentionally narrowly scoped. The following are true:
 
-* Will **not** link directories
-* Will **not** link more than one dotfile per invocation
-* Will remove the top-most directory from source files
-* Will create parent directories as necessary
-* Will overwrite existing links
 * Will convert all instances of the prefix `dot-` to `.`
-* Will link relative to the value the $HOME environment variable (for now)
+* Will create parent directories as necessary
+* Will link only one dotfile per invocation
+* Will link only regular files
+* Will link relative to the value the `$DOTFILE_TARGET` or `$HOME` environment variabes
+* Will overwrite existing links
+* Will remove the top-most directory the filepath
 
 Suppose your repository looks like the following:
 
@@ -51,6 +51,8 @@ $ ./link.sh bar/dot-bazrc
 Linking bar/dot-bazrc as /Users/vince/.bazrc...
 ```
 
+The top-level directory `bar` has no meaning to `link.sh`. It's there for the
+user's benefit.
 
 ## History
 
