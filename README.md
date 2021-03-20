@@ -15,6 +15,7 @@ The linking mechanism is intentionally narrowly scoped. The following are true:
 * Will create parent directories as necessary
 * Will overwrite existing links
 * Will convert all instances of the prefix `dot-` to `.`
+* Will link relative to the value the $HOME environment variable (for now)
 
 Suppose your repository looks like the following:
 
@@ -25,7 +26,7 @@ Suppose your repository looks like the following:
 │   └── dot-bazrc
 ├── foo
 │   └── dot-config
-│       └── baz
+│       └── foo
 └── link.sh
 
 3 directories, 4 files
@@ -34,9 +35,18 @@ Suppose your repository looks like the following:
 Then `link.sh` can be used as in the following:
 
 ```
-$ ./link.sh foo/dot-config/baz
-Linking foo/dot-config/baz as /Users/vince/.config/baz...
+$ ./link.sh foo/dot-config/foo
+Linking foo/dot-config/foo as /Users/vince/.config/foo...
+```
 
+Notice that the parent directory `foo` was removed before the file was
+linked. This has the advantage of allowing you to organize your dotfiles at the
+top-level without accidentally imparting hierarchical knowledge of the file
+structure.
+
+Similarly,
+
+```
 $ ./link.sh bar/dot-bazrc
 Linking bar/dot-bazrc as /Users/vince/.bazrc...
 ```
@@ -61,9 +71,8 @@ as such in the source repository (ie, this repository). For example
 `.config/dot-foo`.  This meant that these files and directories would be hidden
 while browsing my repository. Minor, but annoying.
 
-The more crippling issue with GNU Stow is actually that only __some__ versions
-of the command support the `--dotfile` flag. This meant that to support
-multiple systems, I'd need to implement that feature myself. While I was at it,
-I may as well switch to using the `link` command directly, since GNU Stow was
-not actually designed for dotfile management after all. Thus, this repository
-(in its current form) was born.
+Since some versions of GNU Stow available don't support the `--dotfile` flag,
+this meant that to support multiple systems I'd need to implement that feature
+myself. While I was at it I switched to using the `link` command directly,
+since GNU Stow was not actually designed for dotfile management after all.
+Thus, this repository (in its current form) was born.
