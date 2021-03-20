@@ -3,8 +3,8 @@
 ##
 # Non-sophisticated dotfile management.
 #
-# Transform any path elements prefixed with `dot-` to its hidden form
-# The top-most directory used by this repository is removed before linkage.
+# Transform any path elements prefixed with `dot-` to their hidden form.
+# The top-most directory is removed before linkage.
 #
 # For example, the path `foo/dot-foo/config/dot-foorc` becomes
 # `.foo/config/.foorc` after linkage.
