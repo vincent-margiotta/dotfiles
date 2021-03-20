@@ -56,9 +56,9 @@ function docker_launch_jenkins_container() {
 ##
 # Output a list of the top N processes hogging my CPU!
 #
-# Pass an integer N to this function to output only the top N.
+# Pass an integer N to this function to output only the top N. Defaults to 10.
 function utilization() {
-  command ps -cu "$USER" -r -o command,%cpu,%mem | command head -n "${1:-10}"
+  command ps -cu "$USER" -r -o pid,command,%cpu,%mem | command head -n "${1:-11}"
 }
 
 ##
