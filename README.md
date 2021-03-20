@@ -41,8 +41,7 @@ Linked foo/dot-config/foo to /Users/vince/.config/foo
 
 Notice that the parent directory `foo` was removed before the file was
 linked. This has the advantage of allowing you to organize your dotfiles at the
-top-level without accidentally imparting hierarchical knowledge of the file
-structure.
+top-level.
 
 Similarly,
 
