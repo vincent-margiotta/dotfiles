@@ -1,3 +1,15 @@
 #!/usr/bin/env bash
 
+# Output battery life
 alias battery='cat /sys/class/power_supply/BAT?/capacity'
+
+# Open journal or commonplace entry
+alias journal='__new_journal_entry'
+alias commonplace='__new_commonplace_entry'
+
+# Encrypt/decrypt a file
+alias encrypt='__encrypt_entry'
+alias decrypt='__decrypt_entry'
+
+# Encrypt all entries in the journal
+alias securejournal='__encrypt_journal'

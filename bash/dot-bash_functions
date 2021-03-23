@@ -3,3 +3,50 @@
 ##
 # Capture and display output simulataneously.
 __capture() { tee captured.log; }
+
+##
+# Begin a new journal entry.
+__new_journal_entry() {
+  [ -z "$EDITOR" ] && { echo "Please set your editor. "; return; }
+  JOURNAL="$HOME/documents/journal"
+  CURRENT_YEAR=$(date +%Y); CURRENT_MONTH_DAY=$(date +%m_%d); CURRENT_TIME=$(date +%H_%M)
+  [ -d "$JOURNAL/$CURRENT_YEAR/$CURRENT_MONTH_DAY" ] || mkdir -p "$JOURNAL/$CURRENT_YEAR/$CURRENT_MONTH_DAY"
+  "$EDITOR" "$JOURNAL/$CURRENT_YEAR/$CURRENT_MONTH_DAY/$CURRENT_TIME"
+}
+
+##
+# Begin a new commonplace entry.
+__new_commonplace_entry() {
+  [ -z "$EDITOR" ] && { echo "Please set your editor. "; return; }
+  COMMONPLACE="$HOME/documents/commonplace"
+  "$EDITOR" "$COMMONPLACE/book"
+}
+
+##
+# Encrypt a journal/commonplace entry.
+__encrypt_entry() {
+  ENCRYPT=$(which gpg)
+  [ "$?" -eq 0 ] || { echo "Please install GPG. "; return; }
+  PLAINTEXT_FILE="$1"; ENCRYPTED_FILE="$PLAINTEXT_FILE".enc
+  "$ENCRYPT" --encrypt --recipient $USER --output "$ENCRYPTED_FILE" "$PLAINTEXT_FILE"
+}
+
+##
+# Decrypt a journal/commonplace entry.
+__decrypt_entry() {
+  DECRYPT=$(which gpg)
+  [ "$?" -eq 0 ] || { echo "Please install GPG. "; return; }
+  ENCRYPTED_FILE="$1"; PLAINTEXT_FILE=${ENCRYPTED_FILE%%.enc}
+  [ -f "$PLAINTEXT_FILE" ] && { echo "Plain text already exists. "; return; }
+  "$DECRYPT" --decrypt --local-user $USER --output "$PLAINTEXT_FILE" "$ENCRYPTED_FILE"
+}
+
+##
+# Iterate through journal tree, encrypting all entries.
+__encrypt_journal() {
+  JOURNAL="$HOME/documents/journal"
+  find "$JOURNAL" -name "*.md" | while read ENTRY; do
+    echo "Encrypting $ENTRY"
+    __encrypt_entry "$ENTRY"
+  done
+}
