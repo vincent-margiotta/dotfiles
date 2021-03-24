@@ -68,3 +68,29 @@ function watch_and_do() {
   local DIR="$1"; local CMD="$2"
   fswatch -0 "$DIR" | while read -d "" EVENT; do "$CMD" ${EVENT}; done
 }
+
+##
+#
+function find_and_do() {
+  local DIR="$1"; shift
+  find "$PWD" -type d -path "**/*/$DIR/.git" -execdir "$@" \;
+}
+
+##
+# Vagabond is polite vagrant.
+#
+# This function allows arbitrary vagrant commands to be run from anywhere
+# rather than the vagrant image repository.
+vagabond () {
+  [ "$#" -lt 2 ] && { echo "Usage: vagabond PROJECT CMD"; exit 2; }
+
+  MAX_RECURSION_DEPTH=4
+  TOP_LEVEL="$HOME/Documents"
+  VAGRANT_FILE="*/$1/Vagrantfile"
+  VAGRANT_CMD=("${@:2}")
+
+  find $TOP_LEVEL -type f \
+                  -path $VAGRANT_FILE \
+                  -maxdepth $MAX_RECURSION_DEPTH \
+                  -execdir command vagrant $VAGRANT_CMD \;
+}
