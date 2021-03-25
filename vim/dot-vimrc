@@ -3,7 +3,7 @@ source ~/.vimrc-vundle
 
 "set backspace=indent,eol,start  " Backspace like normal
 set autoindent                  " auto indentation
-" set colorcolumn=79              " Set vertical ruler
+set colorcolumn=79              " Set vertical ruler
 set encoding=utf-8
 set expandtab                   " Convert to spaces
 set fileformat=unix
