@@ -47,7 +47,7 @@ set nofoldenable
 
 set t_Co=256
 set background=dark
-" colorscheme material
+colorscheme dogrun
 hi! Normal guibg=NONE
 hi! NonText guibg=NONE
 hi! Normal ctermbg=NONE
