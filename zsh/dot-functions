@@ -81,13 +81,13 @@ function find_and_do() {
 #
 # This function allows arbitrary vagrant commands to be run from anywhere
 # rather than the vagrant image repository.
-vagabond () {
-  [ "$#" -lt 2 ] && { echo "Usage: vagabond PROJECT CMD"; exit 2; }
+function vagabond () {
+  [ "$#" -lt 2 ] && { echo "Usage: vagabond PROJECT CMD"; return 2; }
 
-  MAX_RECURSION_DEPTH=4
-  TOP_LEVEL="$HOME/Documents"
-  VAGRANT_FILE="*/$1/Vagrantfile"
-  VAGRANT_CMD=("${@:2}")
+  local MAX_RECURSION_DEPTH=4
+  local TOP_LEVEL="$HOME/Documents"
+  local VAGRANT_FILE="*/$1/Vagrantfile"
+  local VAGRANT_CMD=("${@:2}")
 
   find $TOP_LEVEL -type f \
                   -path $VAGRANT_FILE \
