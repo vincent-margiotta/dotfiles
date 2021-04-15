@@ -70,10 +70,19 @@ function watch_and_do() {
 }
 
 ##
-#
+# Find all git repositories which match PATTERN and perform command.
 function find_and_do() {
-  local DIR="$1"; shift
-  find "$PWD" -type d -path "**/*/$DIR/.git" -execdir "$@" \;
+  command -v git; [ "$?" -eq 0 ] || { echo "Install: git."; return 1; }
+
+  local MAX_SEARCH_DEPTH=3
+  local PATTERN="$1"; shift
+  local SEARCH="**/*/$PATTERN/.git"
+
+  find "$PWD" -type d \
+              -path "$SEARCH" \
+              -maxdepth "$MAX_SEARCH_DEPTH" \
+              -execdir pwd \; \
+              -execdir "$@" \; \
 }
 
 ##
