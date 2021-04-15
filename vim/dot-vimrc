@@ -24,8 +24,14 @@ set smartcase
 set softtabstop=2
 set tabstop=2                   " 2 spaces for tab
 set textwidth=79
+
+" Fuzzy finder
+set path+=**
 set wildmenu
-set wildmode=longest,list
+set wildmode=longest:full,full
+
+" Tags
+command! MakeTags !ctags -R .
 
 " netrw Configuration
 let g:netrw_banner=0
@@ -45,6 +51,7 @@ set foldlevel=2
 set foldignore=
 set nofoldenable
 
+" Colors, etc.
 set t_Co=256
 set background=dark
 colorscheme dogrun
@@ -52,46 +59,14 @@ hi! Normal guibg=NONE
 hi! NonText guibg=NONE
 hi! Normal ctermbg=NONE
 hi! NonText ctermbg=NONE
-syntax on                       " syntax highlighting
+syntax on
 
+highlight LineNr ctermbg=236 ctermfg=240
+highlight IncSearch ctermbg=3 ctermfg=1
+highlight Search ctermbg=1 ctermfg=3
+highlight SpellBad ctermbg=0 ctermfg=1
 
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-
-noremap k <Nop>
-noremap j <Nop>
-noremap l <Nop>
-noremap h <Nop>
-
-" inoremap jk <Esc>
-" inoremap JK <Esc>
-noremap <C-l> :nohlsearch<CR>   " clear terminal and highlighted search items
-
-" set up some custom colors
-highlight clear SignColumn
-highlight VertSplit    ctermbg=236
-highlight ColorColumn  ctermbg=237
-highlight LineNr       ctermbg=236 ctermfg=240
-highlight CursorLineNr ctermbg=236 ctermfg=240
-highlight CursorLine   ctermbg=236
-highlight StatusLineNC ctermbg=238 ctermfg=0
-highlight StatusLine   ctermbg=240 ctermfg=12
-highlight IncSearch    ctermbg=3   ctermfg=1
-highlight Search       ctermbg=1   ctermfg=3
-highlight Visual       ctermbg=3   ctermfg=0
-highlight Pmenu        ctermbg=240 ctermfg=12
-highlight PmenuSel     ctermbg=3   ctermfg=1
-highlight SpellBad     ctermbg=0   ctermfg=1
-
-" highlight the status bar when in insert mode
-if version >= 700
-  au InsertEnter * hi StatusLine ctermfg=235 ctermbg=2
-  au InsertLeave * hi StatusLine ctermbg=240 ctermfg=12
-endif
-
-" trailing whitespace highlighting
+" Highlight trailing whitespace
 " http://vim.wikia.com/wiki/highlight_unwanted_spaces
 highlight extrawhitespace ctermbg=white guibg=white
 match extrawhitespace /\s\+$/
@@ -100,7 +75,15 @@ autocmd insertenter * match extrawhitespace /\s\+\%#\@<!$/
 autocmd insertleave * match extrawhitespace /\s\+$/
 autocmd bufwinleave * call clearmatches()
 
-" toggle spellcheck with `
-map ` :setlocal spell! spelllang=en_us<cr>j
 
-au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>79v.\+', -1)
+" Keybindings -- Disable Arrows
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+" Clear highlighted search items
+noremap <C-l> :nohlsearch<CR>
+
+" Toggle spellcheck with back-tick (`)
+map ` :setlocal spell! spelllang=en_us<cr>
