@@ -74,7 +74,7 @@ function watch_and_do() {
 function find_and_do() {
   command -v git; [ "$?" -eq 0 ] || { echo "Install: git."; return 1; }
 
-  local MAX_SEARCH_DEPTH=3
+  local MAX_SEARCH_DEPTH=5
   local PATTERN="$1"; shift
   local SEARCH="**/*/$PATTERN/.git"
 
@@ -102,4 +102,39 @@ function vagabond () {
                   -path $VAGRANT_FILE \
                   -maxdepth $MAX_RECURSION_DEPTH \
                   -execdir command vagrant $VAGRANT_CMD \;
+}
+
+##
+# Update all git repositories found beneath PWD. Skip any repositories that
+# contain changes.
+function sync_all_repositories() {
+  command -v git; [ "$?" -eq 0 ] || { echo "Install: git."; return 1; }
+
+  local TRUNK=master
+  local WORKDIR="$PWD"
+  local SEARCH_PATTERN="**/*/.git"
+  local MAX_SEARCH_DEPTH=3
+
+  trap '{ printf "Caught interrupt!"; cd "$WORKDIR"; return 1; }' SIGINT
+
+  while read -d '' PATH_TO_GITDIR; do
+    local REPOSITORY=$(dirname $PATH_TO_GITDIR)
+
+    printf "\n>>> Syncing $(basename $REPOSITORY)... "
+
+    cd "$REPOSITORY"
+      $(command git diff-index --quiet HEAD); NO_CHANGES="$?"
+
+      if [ "$NO_CHANGES" -eq 0 ]; then
+        command git checkout --quiet "$TRUNK"
+        command git pull --quiet origin "$TRUNK"
+        printf "Done!"
+      else
+        printf "Skipped due to existing changes!"
+      fi
+    cd $OLDPWD
+  done <<(find "$WORKDIR" -type d \
+                          -maxdepth "$MAX_SEARCH_DEPTH" \
+                          -path "$SEARCH_PATTERN" \
+                          -print0)
 }
