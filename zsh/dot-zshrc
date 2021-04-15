@@ -37,4 +37,8 @@ autoload bashcompinit && bashcompinit
 source $HOME/.aliases
 source $HOME/.functions
 source $ZSH/oh-my-zsh.sh
+
+# Source a few iSeatz aliases-- not checked in.
+source $HOME/.config/iseatz/aliases
+
 source $(brew --prefix asdf)/asdf.sh
