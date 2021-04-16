@@ -1,21 +1,20 @@
 # Non-sophisticated Dotfile Management
 
-Manage my dotfiles in a sane, straight-forward fashion. Please feel free to
+Manages my dotfiles in a sane, straight-forward fashion. Please feel free to
 copy/fork this repository and any configuration files you find within it. There
-are no secrets or sensitive data, but there are a number of functions I've
-found useful.
+are no secrets or sensitive data contained within.
 
 ## Usage
 
-The linking mechanism is intentionally narrowly scoped. The following are true:
+The linking mechanism is narrowly scoped. The following are true upon linking:
 
 * Will convert all instances of the prefix `dot-` to `.`
 * Will create parent directories as necessary
 * Will link only one dotfile per invocation
 * Will link only regular files
-* Will link relative to the value the `$DOTFILE_TARGET` or `$HOME` environment variabes
-* Will overwrite existing links
-* Will remove the top-most directory the filepath
+* Will link relative to the `$DOTFILE_TARGET` or `$HOME` environment variables
+* Will always overwrite existing links
+* Will remove the first directory from the filepath of the dotfile
 
 Suppose your repository looks like the following:
 
@@ -41,8 +40,7 @@ Linking foo/dot-config/foo as /Users/vince/.config/foo...
 
 Notice that the parent directory `foo` was removed before the file was
 linked. This has the advantage of allowing you to organize your dotfiles at the
-top-level without accidentally imparting hierarchical knowledge of the file
-structure.
+top-level.
 
 Similarly,
 
