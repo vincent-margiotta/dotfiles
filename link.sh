@@ -16,14 +16,14 @@
 TARGET="$HOME"  # Default to installing into $HOME unless an override is set.
 [ -e "$DOTFILE_TARGET" ] && TARGET="$DOTFILE_TARGET"
 
-LINKER="$(command -v ln)" # Brief sanity check that the `ln` binary exists.
-[ "$?" -eq 0 ] || { echo "No supported linker found! "; exit 1; }
+# Brief sanity check that the `ln` binary exists.
+LINKER="$(command -v ln)" || { echo "No supported linker found! "; exit 1; }
 
 # The Magic Sauce.
 DOTFILE="$(echo "$1" | cut -d '/' -f2- | sed 's/dot-/./g')"
 
 FULLPATH="$TARGET/$DOTFILE"
-PARENT="$(dirname $FULLPATH)"
+PARENT="$(dirname "$FULLPATH")"
 
 [ -d "$PARENT" ] || { mkdir -p "$PARENT"; echo "Created parent $PARENT"; }
 
