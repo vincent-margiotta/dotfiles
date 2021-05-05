@@ -22,3 +22,4 @@
     lineNumber = true
 [alias]
     history = log --graph --oneline --all
+    experts = shortlog --summary --numbered --all --no-merges
