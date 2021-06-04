@@ -114,6 +114,7 @@ function sync_all_repositories() {
   local WORKDIR="$PWD"
   local SEARCH_PATTERN="**/*/.git"
   local MAX_SEARCH_DEPTH=3
+  local PULL_TIMEOUT=60
 
   trap '{ printf "Caught interrupt!"; cd "$WORKDIR"; return 1; }' SIGINT
 
@@ -129,6 +130,10 @@ function sync_all_repositories() {
         printf "Stashing existing changes... "
         command git stash --quiet
       fi
+
+      command git checkout --quiet "$TRUNK"
+      timeout "$PULL_TIMEOUT" command git pull --quiet origin "$TRUNK"
+      [ "$?" -eq 0 ] && printf "Done!" || printf "Timeout!"
     cd $OLDPWD
   done <<(find "$WORKDIR" -type d \
                           -maxdepth "$MAX_SEARCH_DEPTH" \
