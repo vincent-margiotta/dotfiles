@@ -108,7 +108,7 @@ function vagabond () {
 # Update all git repositories found beneath PWD. Skip any repositories that
 # contain changes.
 function sync_all_repositories() {
-  command -v git; [ "$?" -eq 0 ] || { echo "Install: git."; return 1; }
+  command -v git; [ "$?" -eq 0 ] || { echo "Install: git"; return 1; }
 
   local TRUNK=master
   local WORKDIR="$PWD"
