@@ -82,7 +82,7 @@ function find_and_do() {
               -path "$SEARCH" \
               -maxdepth "$MAX_SEARCH_DEPTH" \
               -execdir pwd \; \
-              -execdir "$@" \; \
+              -execdir "$@" \;
 }
 
 ##
