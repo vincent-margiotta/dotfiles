@@ -113,7 +113,7 @@ function sync_all_repositories() {
   local TRUNK=master
   local WORKDIR="$PWD"
   local SEARCH_PATTERN="**/*/.git"
-  local MAX_SEARCH_DEPTH=3
+  local MAX_SEARCH_DEPTH=4
   local PULL_TIMEOUT=60
 
   trap '{ printf "Caught interrupt!"; cd "$WORKDIR"; return 1; }' SIGINT
@@ -121,7 +121,7 @@ function sync_all_repositories() {
   while read -d '' PATH_TO_GITDIR; do
     local REPOSITORY=$(dirname $PATH_TO_GITDIR)
 
-    printf "\n>>> Syncing $(basename $REPOSITORY)... "
+    printf "\n>>> Syncing $REPOSITORY... "
 
     cd "$REPOSITORY"
       $(command git diff-index --quiet HEAD); NO_CHANGES="$?"
@@ -132,11 +132,14 @@ function sync_all_repositories() {
       fi
 
       command git checkout --quiet "$TRUNK"
-      timeout "$PULL_TIMEOUT" command git pull --quiet origin "$TRUNK"
+      timeout "$PULL_TIMEOUT" command git pull origin "$TRUNK"
       [ "$?" -eq 0 ] && printf "Done!" || printf "Timeout!"
     cd $OLDPWD
   done <<(find "$WORKDIR" -type d \
                           -maxdepth "$MAX_SEARCH_DEPTH" \
                           -path "$SEARCH_PATTERN" \
                           -print0)
+
+  # Reset traps
+  trap - SIGINT
 }
