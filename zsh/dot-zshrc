@@ -38,7 +38,8 @@ source $HOME/.aliases
 source $HOME/.functions
 source $ZSH/oh-my-zsh.sh
 
-# Source a few iSeatz aliases-- not checked in.
-source $HOME/.config/iseatz/aliases
+# Source a few special aliases if they exist-- not checked in.
+[ -f "$HOME/.config/iseatz/aliases" ] && source $HOME/.config/iseatz/aliases
+[ -f "$HOME/.config/cyberpolitik.com/aliases" ] && source $HOME/.config/cyberpolitik.com/aliases
 
 source $(brew --prefix asdf)/asdf.sh
