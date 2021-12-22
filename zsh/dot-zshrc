@@ -8,16 +8,12 @@ export EDITOR=vim
 
 ZSH_THEME=personal
 
-# Honestly, I hate most of these. Remove!
 plugins=(
   asdf
-  aws
-  battery
   bgnotify
   brew
   catimg
   docker
-  dotenv
   vi-mode
   vundle
 )
@@ -38,8 +34,8 @@ source $HOME/.aliases
 source $HOME/.functions
 source $ZSH/oh-my-zsh.sh
 
-# Source a few special aliases if they exist-- not checked in.
-[ -f "$HOME/.config/iseatz/aliases" ] && source $HOME/.config/iseatz/aliases
-[ -f "$HOME/.config/cyberpolitik.com/aliases" ] && source $HOME/.config/cyberpolitik.com/aliases
+# Source a few special aliases if they exist
+[ -f "$HOME/.config/iseatz/aliases" ] && source "$HOME/.config/iseatz/aliases"
+[ -f "$HOME/.config/cyberpolitik.com/aliases" ] && source "$HOME/.config/cyberpolitik.com/aliases"
 
 source $(brew --prefix asdf)/asdf.sh
