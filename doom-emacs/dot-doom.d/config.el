@@ -61,6 +61,8 @@
 (global-set-key (kbd "C->") 'dumb-jump-go)
 (global-set-key (kbd "C-<") 'dumb-jump-back)
 
+(setq projectile-project-search-path '(("~/Documents" . 4)))
+
 (map! :leader
       (:prefix-map ("o" . "open")
        :desc "Open shell" "t" #'eshell))
