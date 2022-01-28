@@ -40,10 +40,6 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
 
-;; Stolen from Felix
-(global-set-key (kbd "C->") 'dumb-jump-go)
-(global-set-key (kbd "C-<") 'dumb-jump-back)
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -60,3 +56,11 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Stolen from Felix
+(global-set-key (kbd "C->") 'dumb-jump-go)
+(global-set-key (kbd "C-<") 'dumb-jump-back)
+
+(map! :leader
+      (:prefix-map ("o" . "open")
+       :desc "Open shell" "t" #'eshell))
