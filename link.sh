@@ -14,7 +14,8 @@
 [ -f "$1" ] || { echo "Can only link regular files. "; exit 2; }
 
 TARGET="$HOME"  # Default to installing into $HOME unless an override is set.
-[ -e "$DOTFILES" ] && TARGET="$DOTFILES"
+[ -n "$DOTFILES" ] && TARGET="$DOTFILES"
+[ -d "$TARGET" ] || { echo "TARGET is not a directory. "; exit 1; }
 
 # Brief sanity check that the `ln` binary exists.
 LINKER="$(command -v ln)" || { echo "No supported linker found! "; exit 1; }
