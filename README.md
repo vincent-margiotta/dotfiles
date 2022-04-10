@@ -1,24 +1,23 @@
 # Simple Dotfile Management
 
-Manages my dotfiles in a flexible, straight-forward fashion.
-
-The repository consists of my dotfiles and a linker script.
+Manages my dotfiles in a flexible, straight-forward fashion. The repository
+consists of my dotfiles and a linker script.
 
 Feel free to copy/fork this repository and any configuration files you find
 within it. There are no secrets or sensitive data contained within.
 
-## Features
+## Linker Features
 
 * Creates parent directories as required
 * Links relative to the `$DOTFILES` environment variable (default: `$HOME`)
 * Overwrites existing links
 
-## Limitations
+## Linker Limitations
 
 * Links only regular files
 * Links one file per invocation
 
-## Usage
+## Linker Usage
 
 To invoke the linker pass it a repository dotfile on the command line:
 
@@ -52,7 +51,7 @@ $ ./link.sh bash/dot-bashrc
 Linking bash/dot-bashrc as /Users/vince/.bashrc
 ```
 
-#### Frequently Asked Questions
+## Frequently Asked Questions
 
 **Why not use [dotbot|GNU stow|any other dotfile manager]?**
 
@@ -68,7 +67,7 @@ What I've discovered over the years is that the time spent linking my dotfiles
 is never the bottleneck, but rather the time spent thinking about and
 experiment with how I want to configure my system was more important to me.
 
-#### Other Dotfile Managers
+## Other Dotfile Managers
 
 [dotbot](https://github.com/anishathalye/dotbot) - A great tool with many
 features. I used it for years before deciding to switch to something with no
