@@ -70,8 +70,7 @@ experimenting with how I want to configure my system was more important to me.
 ## Other Dotfile Managers
 
 [dotbot](https://github.com/anishathalye/dotbot) - A great tool with many
-features. I used it for years before deciding to switch to something with no
-external dependencies.
+features. I used it for years before deciding to switch.
 
 [GNU Stow](https://www.gnu.org/software/stow/) - Another great tool. However,
 it wasn't made to manage dotfiles. Because of the different versions of GNU
