@@ -65,7 +65,7 @@ to keep it that way.
 
 What I've discovered over the years is that the time spent linking my dotfiles
 is never the bottleneck, but rather the time spent thinking about and
-experiment with how I want to configure my system was more important to me.
+experimenting with how I want to configure my system was more important to me.
 
 ## Other Dotfile Managers
 
@@ -76,5 +76,5 @@ external dependencies.
 [GNU Stow](https://www.gnu.org/software/stow/) - Another great tool. However,
 it wasn't made to manage dotfiles. Because of the different versions of GNU
 Stow out there, I couldn't always manage my dotfiles consistently on every
-system I'd encounter. This is what lead me to create the simple POSIX shell
+system I'd encountered. This is what lead me to create the simple POSIX shell
 script to manage my dotfiles in this repository.
