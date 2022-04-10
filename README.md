@@ -1,78 +1,81 @@
-# Non-sophisticated Dotfile Management
+# Simple Dotfile Management
 
-Manages my dotfiles in a sane, straight-forward fashion. Please feel free to
-copy/fork this repository and any configuration files you find within it. There
-are no secrets or sensitive data contained within.
+Manages my dotfiles in a flexible, straight-forward fashion.
+
+The repository consists of my dotfiles and a linker script.
+
+Feel free to copy/fork this repository and any configuration files you find
+within it. There are no secrets or sensitive data contained within.
+
+## Features
+
+* Creates parent directories as required
+* Links relative to the `$DOTFILES` environment variable (default: `$HOME`)
+* Overwrites existing links
+
+## Limitations
+
+* Links only regular files
+* Links one file per invocation
 
 ## Usage
 
-The linking mechanism is narrowly scoped. The following are true upon linking:
+To invoke the linker pass it a repository dotfile on the command line:
 
-* Will convert all instances of the prefix `dot-` to `.`
-* Will create parent directories as necessary
-* Will link only one dotfile per invocation
-* Will link only regular files
-* Will link relative to the `$DOTFILE_TARGET` or `$HOME` environment variables
-* Will always overwrite existing links
-* Will remove the first directory from the filepath of the dotfile
+```shell
+$ ./link.sh [PATH TO DOTFILE IN REPOSITORY]
+```
 
-Suppose your repository looks like the following:
+The linker creates a symlink to the repository dotfile and will automatically
+create any parent directories as necessary. Where the dotfile is linked to is
+based on the repository dotfile's name. Two rules are applied by the linker:
+
+1. Top-level direcory names are ignored
+2. All instances of `dot-` are converted to `.`
+
+For example, if you have some dotfiles in your repository like
 
 ```
 .
 ├── README.md
-├── bar
-│   └── dot-bazrc
-├── foo
-│   └── dot-config
-│       └── foo
+├── bash
+│   └── dot-bashrc
 └── link.sh
 
-3 directories, 4 files
+1 directory, 3 files
 ```
 
-Then `link.sh` can be used as in the following:
+To link your Bash configuration dotfile, run the following:
 
-```
-$ ./link.sh foo/dot-config/foo
-Linking foo/dot-config/foo as /Users/vince/.config/foo...
-```
-
-Notice that the parent directory `foo` was removed before the file was
-linked. This has the advantage of allowing you to organize your dotfiles at the
-top-level.
-
-Similarly,
-
-```
-$ ./link.sh bar/dot-bazrc
-Linking bar/dot-bazrc as /Users/vince/.bazrc...
+```shell
+$ ./link.sh bash/dot-bashrc
+Linking bash/dot-bashrc as /Users/vince/.bashrc
 ```
 
-The top-level directory `bar` has no meaning to `link.sh`. It's there for the
-user's benefit.
+#### Frequently Asked Questions
 
-## History
+**Why not use [dotbot|GNU stow|any other dotfile manager]?**
 
-Besides being simpler, this solution solves a few problems I've had with
-previous tools.
+I've used several dotfiles managers in the past with varying success.
+Generally, I found them overly complex for my uses.
 
-Beginning with [dotbot](https://github.com/anishathalye/dotbot) which is great
-but quite a bit sophisticated.
+**Can you add support for linking multiple files per invocation?**
 
-Next I tried [GNU Stow](https://www.gnu.org/software/stow/), which is almost
-perfect except that I disliked that the source dotfiles (ie, the configuration
-files contained within this repository) had to be named in their hidden form. Some
-versions of GNU Stow support the `--dotfile` flag, which transforms the source
-files named like `dot-` to their "hidden" form. Unfortunately, it appeared that
-this transformation only applied to the basename, which means if there are any
-other parts of the filepath that should be hidden, then they need to be named
-as such in the source repository (ie, this repository). For example
-`.config/dot-foo`.  This meant that these files and directories would be hidden
-while browsing my repository. Minor, but annoying.
+Yes, but I won't. Currently, the linker script does one thing well and I'd like
+to keep it that way.
 
-Since some versions of GNU Stow available don't support the `--dotfile` flag,
-this meant that to support multiple systems I'd need to implement that feature
-myself. While I was at it I switched to using the `link` command directly,
-since GNU Stow was not actually designed for dotfile management after all.
-Thus, this repository (in its current form) was born.
+What I've discovered over the years is that the time spent linking my dotfiles
+is never the bottleneck, but rather the time spent thinking about and
+experiment with how I want to configure my system was more important to me.
+
+#### Other Dotfile Managers
+
+[dotbot](https://github.com/anishathalye/dotbot) - A great tool with many
+features. I used it for years before deciding to switch to something with no
+external dependencies.
+
+[GNU Stow](https://www.gnu.org/software/stow/) - Another great tool. However,
+it wasn't made to manage dotfiles. Because of the different versions of GNU
+Stow out there, I couldn't always manage my dotfiles consistently on every
+system I'd encounter. This is what lead me to create the simple POSIX shell
+script to manage my dotfiles in this repository.
