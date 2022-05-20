@@ -12,6 +12,8 @@
     ui = auto
 [gc]
     auto = 1
+[pull]
+    rebase = false
 [merge]
     summary = true
     tool = vimdiff
