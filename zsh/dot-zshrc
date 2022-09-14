@@ -16,6 +16,7 @@ plugins=(
   docker
   vi-mode
   vundle
+  zsh-autosuggestions
 )
 
 ##
