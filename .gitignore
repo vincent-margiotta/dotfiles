@@ -1,1 +1,11 @@
-/.DS_Store
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Editor swap/backup
+*.swp
+*.swo
+*~
