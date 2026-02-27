@@ -1,8 +1,24 @@
 ##
 # This is my personal Z-shell theme.
 
-PROMPT='%{$fg[cyan]%}[%c][%0(?.%{$fg[green]%}ok.%{$fg[red]%}fail)%{$fg[cyan]%}] %{$reset_color%}'
-RPROMPT='%{$fg[blue]%}$(git_prompt_info)%{$reset_color%} $(git_prompt_status)%{$reset_color%}'
+function prompt_git_info() {
+  if ! __git_prompt_git rev-parse --git-dir &> /dev/null; then
+    return 0
+  fi
+
+  local ref
+  ref=$(__git_prompt_git symbolic-ref --short HEAD 2> /dev/null) \
+  || ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) \
+  || return 0
+
+  print -n "%{$fg[cyan]%}["
+  print -n "%{$fg[yellow]%}${ref:gs/%/%%}%{$reset_color%}"
+  print -n "%{$fg[cyan]%}]%{$reset_color%}"
+  print -n "$(parse_git_dirty)"
+}
+
+PROMPT='%{$fg[cyan]%}[$([[ -n "$SSH_CLIENT$SSH_TTY$SSH_CONNECTION" ]] && print -n "%{$fg[red]%}R%{$fg[cyan]%}][")%2~]$(prompt_git_info)%{$reset_color%} '
+RPROMPT=''
 
 ZSH_THEME_GIT_PROMPT_PREFIX=""
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
