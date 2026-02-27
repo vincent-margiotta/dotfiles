@@ -3,7 +3,7 @@
     email = vincent.joseph.margiotta.jr@gmail.com
 [core]
     editor = vim
-    pager = "less -F -X"
+    pager = "less -FRSX"
 [color]
     diff = auto
     status = auto
@@ -14,14 +14,27 @@
     auto = 1
 [pull]
     rebase = false
+    ff = only
+[fetch]
+    prune = true
+[push]
+    default = simple
+[rebase]
+    autoStash = true
 [merge]
     summary = true
     tool = vimdiff
     conflictstyle = diff3
     prompt = false
+[mergetool]
+    keepBackup = false
+[diff]
+    algorithm = histogram
 [grep]
     extendRegexp = true
     lineNumber = true
 [alias]
     history = log --graph --oneline --all
     experts = shortlog --summary --numbered --all --no-merges
+[init]
+	defaultBranch = main
