@@ -1,43 +1,61 @@
 #!/usr/bin/env zsh
 
+# Core environment defaults.
 export ZSH=$HOME/.oh-my-zsh
 export LANG=en_US.UTF-8
-export ARCHFLAGS="-arch x86_64"
-export PATH="$PATH:/opt/homebrew/bin"
 export EDITOR=vim
 
+# PATH setup with de-duplication.
+typeset -U path
+orig_path=($path)
+path=()
+
+# Prefer Homebrew, OpenJDK, and common sbin locations when present.
+[ -d /opt/homebrew/bin ] && path+=(/opt/homebrew/bin)
+[ -d /usr/local/opt/openjdk/bin ] && path+=(/usr/local/opt/openjdk/bin)
+[ -d /usr/local/sbin ] && path+=(/usr/local/sbin)
+
+# ASDF version manager.
+[ -d "$HOME/.asdf/bin" ] && path+=("$HOME/.asdf/bin")
+[ -d "$HOME/.asdf/shims" ] && path+=("$HOME/.asdf/shims")
+
+# Keep whatever PATH is already set.
+path+=($orig_path)
+export PATH
+
+# Oh My Zsh theme and plugins.
 ZSH_THEME=personal
 
 plugins=(
-  asdf
   bgnotify
   brew
   catimg
   docker
   vi-mode
   vundle
-  zsh-autosuggestions
 )
 
-##
-# Push a directory onto the stack whenever `cd` is used,
-# being silent about it and ensuring that the contents of the stack is a set.
+# Directory stack behavior.
 setopt AUTO_PUSHD
 setopt PUSHD_SILENT
 setopt PUSHD_IGNORE_DUPS
 
-##
-# Enable bash completion
-# TODO: Is this still necessary?
-autoload bashcompinit && bashcompinit
+# History behavior.
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=$HOME/.zsh_history
+setopt HIST_IGNORE_DUPS HIST_REDUCE_BLANKS INC_APPEND_HISTORY SHARE_HISTORY
 
-source $HOME/.aliases
-source $HOME/.functions
-source $ZSH/oh-my-zsh.sh
+# Local aliases and functions.
+[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
+[ -f "$HOME/.functions" ] && source "$HOME/.functions"
 
-# Source a few special aliases if they exist
+# Load Oh My Zsh if present.
+[ -f "$ZSH/oh-my-zsh.sh" ] && source "$ZSH/oh-my-zsh.sh"
+
+# Source a few special aliases if they exist.
 [ -f "$HOME/.config/iseatz/aliases" ] && source "$HOME/.config/iseatz/aliases"
-[ -f "$HOME/.config/cyberpolitik.com/aliases" ] && source "$HOME/.config/cyberpolitik.com/aliases"
+[ -f "$HOME/.config/cyberpolitik.net/aliases" ] && source "$HOME/.config/cyberpolitik.net/aliases"
 
-source $(brew --prefix asdf)/asdf.sh
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# Some build tools still expect x86_64 on non-ARM macOS.
+[[ $(uname -m) == arm64 ]] || export ARCHFLAGS="-arch x86_64"
