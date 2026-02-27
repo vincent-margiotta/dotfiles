@@ -1,6 +1,5 @@
-[user]
-    name = Vincent J. Margiotta Jr.
-    email = vincent.joseph.margiotta.jr@gmail.com
+[include]
+    path = ~/.gitconfig.local
 [core]
     editor = vim
     pager = "less -FRSX"
